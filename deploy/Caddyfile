@@ -1,0 +1,33 @@
+# Caddy reverse proxy — single HTTPS front door for the clinic LAN.
+#
+# {$SITE_ADDRESS} comes from the environment (see .env). Use a hostname such as
+# rehab.clinic.lan (resolve it on the LAN via your router's DNS or the tablets'
+# hosts file). "tls internal" makes Caddy issue certificates from its own local
+# CA — install that CA's root on each tablet once (see deploy/README.md) and
+# HTTPS works with no browser warnings.
+
+{$SITE_ADDRESS} {
+	# Local certificate authority (no public domain / internet needed).
+	tls internal
+
+	encode gzip
+
+	# Security headers.
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		-Server
+	}
+
+	# API → NestJS (keeps the /api prefix the app expects).
+	handle /api/* {
+		reverse_proxy api:3001
+	}
+
+	# Everything else → the static web app (nginx, SPA fallback inside).
+	handle {
+		reverse_proxy web:80
+	}
+}

@@ -1,0 +1,41 @@
+.header {
+  background: linear-gradient(180deg, var(--mantine-color-white) 0%, var(--mantine-color-gray-0) 100%);
+  border-bottom: 1px solid var(--mantine-color-gray-2);
+  backdrop-filter: blur(6px);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--mantine-color-teal-7);
+  padding: 6px 8px;
+  border-radius: var(--mantine-radius-md);
+  transition: background 150ms ease;
+}
+.brand:hover {
+  background: var(--mantine-color-teal-0);
+}
+
+.iconBtn,
+.user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: var(--mantine-radius-md);
+  color: var(--mantine-color-gray-7);
+  transition: background 150ms ease;
+}
+.iconBtn:hover,
+.user:hover {
+  background: var(--mantine-color-gray-1);
+}
+
+.main {
+  min-height: 100dvh;
+  background:
+    radial-gradient(1200px 600px at 100% -10%, var(--mantine-color-teal-0) 0%, transparent 60%),
+    var(--mantine-color-gray-0);
+}

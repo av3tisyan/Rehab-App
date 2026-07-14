@@ -1,0 +1,55 @@
+# Same images run on-prem and in the cloud; only env values differ.
+# Usage: cp .env.example .env && docker compose up --build
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-rehab}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-rehab}
+      POSTGRES_DB: ${POSTGRES_DB:-rehab}
+    ports:
+      - '${POSTGRES_PORT:-5432}:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-rehab} -d ${POSTGRES_DB:-rehab}']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      API_PORT: 3001
+      DATABASE_URL: postgresql://${POSTGRES_USER:-rehab}:${POSTGRES_PASSWORD:-rehab}@db:5432/${POSTGRES_DB:-rehab}
+      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET:-dev_access_secret}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-dev_refresh_secret}
+      JWT_ACCESS_TTL: ${JWT_ACCESS_TTL:-15m}
+      JWT_REFRESH_TTL: ${JWT_REFRESH_TTL:-7d}
+      DEFAULT_LOCALE: ${DEFAULT_LOCALE:-hy}
+    ports:
+      - '${API_PORT:-3001}:3001'
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:3001}
+    restart: unless-stopped
+    ports:
+      - '${WEB_PORT:-5173}:80'
+    depends_on:
+      - api
+
+volumes:
+  pgdata:

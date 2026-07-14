@@ -1,0 +1,51 @@
+.svg {
+  width: auto;
+  max-width: 100%;
+  max-height: min(70vh, 560px);
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.silhouette > * {
+  fill: var(--mantine-color-gray-1);
+  stroke: var(--mantine-color-gray-3);
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.silhouette path {
+  fill: var(--mantine-color-gray-1);
+}
+
+.joint {
+  cursor: pointer;
+}
+
+.hit {
+  fill: transparent;
+}
+
+.dot {
+  fill: var(--mantine-color-teal-5);
+  stroke: var(--mantine-color-white);
+  stroke-width: 3;
+  transition:
+    r 120ms ease,
+    fill 120ms ease;
+}
+
+.joint:hover .dot {
+  fill: var(--mantine-color-teal-7);
+}
+
+.joint[data-measured] .dot {
+  fill: var(--mantine-color-teal-8);
+}
+
+.joint[data-active] .dot {
+  fill: var(--mantine-color-orange-6);
+  r: 13;
+}
