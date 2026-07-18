@@ -1,0 +1,87 @@
+/* ============================================================
+   Design tokens — the semantic layer from the "Rehab Clinic Design System".
+   Raw scales come from Mantine (var(--mantine-color-*)); this file adds the
+   semantic aliases and app-specific tokens the design system formalizes, so
+   components/CSS reference intent (--color-primary, --status-improvement…)
+   rather than raw values.
+   ============================================================ */
+:root {
+  /* ---- Brand / primary ---- */
+  --color-primary: var(--mantine-color-teal-6);
+  --color-primary-hover: var(--mantine-color-teal-7);
+  --color-primary-active: var(--mantine-color-teal-8);
+  --color-primary-subtle: var(--mantine-color-teal-0);
+  --color-primary-border: var(--mantine-color-teal-3);
+  --color-on-primary: var(--mantine-color-white);
+
+  /* ---- Surfaces ---- */
+  --surface-app: var(--mantine-color-gray-0);
+  --surface-card: var(--mantine-color-white);
+  --surface-sunken: var(--mantine-color-gray-0);
+  --surface-hover: var(--mantine-color-gray-1);
+
+  /* ---- Text ---- */
+  --text-heading: var(--mantine-color-gray-9);
+  --text-body: var(--mantine-color-gray-8);
+  --text-muted: var(--mantine-color-gray-6);
+  --text-on-primary: var(--mantine-color-white);
+
+  /* ---- Borders ---- */
+  --border-subtle: var(--mantine-color-gray-2);
+  --border-default: var(--mantine-color-gray-3);
+  --border-strong: var(--mantine-color-gray-4);
+
+  /* ---- Direction / semantic status (never used alone — pair w/ icon+label) ---- */
+  --status-improvement: var(--mantine-color-teal-7);
+  --status-improvement-bg: var(--mantine-color-teal-0);
+  --status-decline: var(--mantine-color-red-7);
+  --status-decline-bg: var(--mantine-color-red-0);
+  --status-neutral: var(--mantine-color-gray-6);
+  --status-neutral-bg: var(--mantine-color-gray-1);
+  --status-warning: var(--mantine-color-orange-7);
+  --status-warning-bg: var(--mantine-color-orange-0);
+  --status-info: var(--mantine-color-blue-7);
+  --status-info-bg: var(--mantine-color-blue-0);
+
+  /* ---- Body-diagram joint states ---- */
+  --joint-default: var(--mantine-color-teal-5);
+  --joint-hover: var(--mantine-color-teal-7);
+  --joint-measured: var(--mantine-color-teal-8);
+  --joint-active: var(--mantine-color-orange-6);
+
+  /* ---- Side coding (L vs R) ---- */
+  --side-left: var(--mantine-color-grape-6);
+  --side-left-bg: var(--mantine-color-grape-0);
+  --side-right: var(--mantine-color-teal-6);
+  --side-right-bg: var(--mantine-color-teal-0);
+
+  /* ---- Spacing & radii (tablet-first) ---- */
+  --space-xs: 0.625rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.25rem;
+  --space-xl: 2rem;
+
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-brand: 18px;
+  --radius-full: 999px;
+
+  --touch-min: 44px;
+  --touch-comfortable: 48px;
+
+  /* ---- Typography ---- */
+  --ls-caps: 0.04em;
+
+  /* ---- Shadows (app-specific tactile elevation) ---- */
+  --shadow-hover-card: 0 12px 28px -18px rgba(0, 0, 0, 0.4);
+  --shadow-save-bar: 0 -6px 20px -12px rgba(0, 0, 0, 0.25);
+  --shadow-brand-mark: 0 8px 24px -8px var(--mantine-color-teal-5);
+
+  /* ---- Motion (calm, tactile) ---- */
+  --ease-lift: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 120ms;
+  --dur-base: 140ms;
+  --dur-slow: 150ms;
+  --lift-hover: translateY(-2px);
+}

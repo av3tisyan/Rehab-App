@@ -29,23 +29,23 @@
 }
 
 .dot {
-  fill: var(--mantine-color-teal-5);
+  fill: var(--joint-default);
   stroke: var(--mantine-color-white);
   stroke-width: 3;
   transition:
-    r 120ms ease,
-    fill 120ms ease;
+    r var(--dur-fast) ease,
+    fill var(--dur-fast) ease;
 }
 
 .joint:hover .dot {
-  fill: var(--mantine-color-teal-7);
+  fill: var(--joint-hover);
 }
 
 .joint[data-measured] .dot {
-  fill: var(--mantine-color-teal-8);
+  fill: var(--joint-measured);
 }
 
 .joint[data-active] .dot {
-  fill: var(--mantine-color-orange-6);
+  fill: var(--joint-active);
   r: 13;
 }

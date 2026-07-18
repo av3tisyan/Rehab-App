@@ -4,9 +4,9 @@
   right: 0;
   bottom: 0;
   z-index: 200;
-  background: var(--mantine-color-white);
-  border-top: 1px solid var(--mantine-color-gray-2);
-  box-shadow: 0 -6px 20px -12px rgba(0, 0, 0, 0.25);
+  background: var(--surface-card);
+  border-top: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-save-bar);
   padding: 12px 0;
   padding-bottom: max(12px, env(safe-area-inset-bottom));
 }

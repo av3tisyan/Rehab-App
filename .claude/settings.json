@@ -58,7 +58,11 @@
       "Bash(git fetch *)",
       "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('apps/web/src/i18n/hy.json','utf8'\\)\\); JSON.parse\\(require\\('fs'\\).readFileSync\\('apps/web/src/i18n/en.json','utf8'\\)\\); console.log\\('hy.json + en.json: valid'\\)\")",
       "Bash(git commit -q -m ' *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git remote *)",
+      "Bash(pnpm --filter @rehab/web add @fontsource/noto-sans-armenian)",
+      "Bash(powershell.exe -Command 'Get-NetTCPConnection -LocalPort 4173 -State Listen -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue }')"
     ],
     "additionalDirectories": [
       "\\tmp"

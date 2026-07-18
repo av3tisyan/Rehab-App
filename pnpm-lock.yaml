@@ -99,6 +99,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@fontsource/noto-sans-armenian':
+        specifier: ^5.2.8
+        version: 5.2.8
       '@mantine/core':
         specifier: ^7.15.2
         version: 7.17.8(@mantine/hooks@7.17.8(react@18.3.1))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1042,6 +1045,9 @@ packages:
 
   '@floating-ui/utils@0.2.12':
     resolution: {integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==}
+
+  '@fontsource/noto-sans-armenian@5.2.8':
+    resolution: {integrity: sha512-aOFFNMHbTDJxXktda/dwK3fc+Li22OflVnvbMzRE0GaPYeFjUwU7u6/BD0BX0EkdWnCeBnaL8vR94ZLt8Rio2Q==}
 
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
@@ -4194,6 +4200,8 @@ snapshots:
       tabbable: 6.5.0
 
   '@floating-ui/utils@0.2.12': {}
+
+  '@fontsource/noto-sans-armenian@5.2.8': {}
 
   '@isaacs/cliui@8.0.2':
     dependencies:
