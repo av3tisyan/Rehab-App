@@ -3,9 +3,11 @@
  * (body regions, ROM motions, MMT muscles) that are stored in English in the
  * database so they render in the active UI language.
  *
- * ⚠️ The Armenian anatomical terms below are best-effort and MUST be verified by
- * a clinician. Correct any here; the UI updates automatically. Unknown codes fall
- * back to a prettified English label, so nothing breaks if an entry is missing.
+ * The Armenian terms follow professional clinical convention (see the project's
+ * "Medical Terminology Research" review): native derivations for anatomy/motions,
+ * with Greco-Latin loanwords where they are the established clinical form
+ * (e.g. Պրոնացիա / Սուպինացիա). Unknown codes fall back to a prettified English
+ * label, so nothing breaks if an entry is missing. Edit here; the UI updates.
  */
 
 type Lang = 'en' | 'hy';

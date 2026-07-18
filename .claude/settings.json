@@ -54,7 +54,11 @@
       "Bash(gh auth *)",
       "Bash(git init *)",
       "Bash(git add *)",
-      "Bash(grep -E \"\\(^|/\\)\\\\.env$|node_modules/|/dist/|\\\\.env\\\\.local\")"
+      "Bash(grep -E \"\\(^|/\\)\\\\.env$|node_modules/|/dist/|\\\\.env\\\\.local\")",
+      "Bash(git fetch *)",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('apps/web/src/i18n/hy.json','utf8'\\)\\); JSON.parse\\(require\\('fs'\\).readFileSync\\('apps/web/src/i18n/en.json','utf8'\\)\\); console.log\\('hy.json + en.json: valid'\\)\")",
+      "Bash(git commit -q -m ' *)",
+      "Bash(git commit *)"
     ],
     "additionalDirectories": [
       "\\tmp"
