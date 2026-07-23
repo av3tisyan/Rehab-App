@@ -102,6 +102,27 @@
     "unchanged": "No change",
     "neutral": "Neutral (no direction)"
   },
+  "goals": {
+    "title": "Treatment goals",
+    "tab": "Goals",
+    "add": "Add goal",
+    "description": "Goal",
+    "descriptionPlaceholder": "e.g. Restore shoulder flexion to 150°",
+    "targetValue": "Target value",
+    "targetDate": "Target date",
+    "target": "Target",
+    "by": "by",
+    "empty": "No goals set for this case yet.",
+    "create": "Add goal",
+    "saved": "Goal added",
+    "statusUpdated": "Goal updated",
+    "status": {
+      "open": "Open",
+      "achieved": "Achieved",
+      "partially_achieved": "Partially achieved",
+      "not_achieved": "Not achieved"
+    }
+  },
   "anamnesis": {
     "title": "Anamnesis",
     "vitae": "Life history",

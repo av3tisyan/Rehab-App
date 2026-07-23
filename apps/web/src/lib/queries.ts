@@ -15,6 +15,7 @@ import type {
   Patient,
   RomNorm,
   ScalePoint,
+  TreatmentGoal,
 } from './types';
 
 // ---- Auth ----
@@ -108,6 +109,33 @@ export function useUpdateEpisode() {
       void qc.invalidateQueries({ queryKey: ['episodes', ep.patientId] });
       void qc.invalidateQueries({ queryKey: ['episode', ep.id] });
     },
+  });
+}
+
+// ---- Treatment goals ----
+export function useGoals(episodeId: string | undefined) {
+  return useQuery({
+    queryKey: ['goals', episodeId],
+    queryFn: () => apiFetch<TreatmentGoal[]>(`/goals?episodeId=${episodeId}`),
+    enabled: !!episodeId,
+  });
+}
+
+export function useCreateGoal() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (body: Record<string, unknown>) =>
+      apiFetch<TreatmentGoal>('/goals', { method: 'POST', body }),
+    onSuccess: (g) => qc.invalidateQueries({ queryKey: ['goals', g.episodeId] }),
+  });
+}
+
+export function useUpdateGoal() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, body }: { id: string; body: Record<string, unknown> }) =>
+      apiFetch<TreatmentGoal>(`/goals/${id}`, { method: 'PATCH', body }),
+    onSuccess: (g) => qc.invalidateQueries({ queryKey: ['goals', g.episodeId] }),
   });
 }
 

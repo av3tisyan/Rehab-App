@@ -34,3 +34,6 @@ pnpm-debug.log*
 
 # Postgres volume (if bind-mounted locally)
 .pgdata/
+
+# Local translations working folder (not part of the app source)
+/translations/

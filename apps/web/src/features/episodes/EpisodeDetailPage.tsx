@@ -26,6 +26,7 @@ import {
   IconNotes,
   IconPlayerPause,
   IconRefresh,
+  IconTargetArrow,
   IconX,
 } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
@@ -36,6 +37,7 @@ import type { EpisodeStatus } from '@rehab/shared';
 import { useCreateEncounter, useEncounters, useEpisode, useUpdateEpisode } from '../../lib/queries';
 import { AnamnesisPanel } from '../anamnesis/AnamnesisPanel';
 import { EpicrisisPanel } from '../epicrisis/EpicrisisPanel';
+import { GoalsPanel } from '../goals/GoalsPanel';
 
 const STATUS_COLOR: Record<EpisodeStatus, string> = {
   active: 'teal',
@@ -187,6 +189,9 @@ export function EpisodeDetailPage() {
           <Tabs.Tab value="progress" leftSection={<IconChartLine size={18} />}>
             {t('comparison.progress')}
           </Tabs.Tab>
+          <Tabs.Tab value="goals" leftSection={<IconTargetArrow size={18} />}>
+            {t('goals.tab')}
+          </Tabs.Tab>
           <Tabs.Tab value="anamnesis" leftSection={<IconNotes size={18} />}>
             {t('anamnesis.title')}
           </Tabs.Tab>
@@ -241,6 +246,10 @@ export function EpisodeDetailPage() {
           >
             <ComparisonView episodeId={episode.id} />
           </Suspense>
+        </Tabs.Panel>
+
+        <Tabs.Panel value="goals">
+          <GoalsPanel episodeId={episode.id} />
         </Tabs.Panel>
 
         <Tabs.Panel value="anamnesis">
