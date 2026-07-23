@@ -38,7 +38,19 @@
     "diagnosis": "Diagnosis",
     "complaint": "Primary complaint",
     "create": "Create case",
-    "status": { "active": "Active", "discharged": "Discharged", "on_hold": "On hold", "cancelled": "Cancelled" }
+    "status": { "active": "Active", "discharged": "Discharged", "on_hold": "On hold", "cancelled": "Cancelled" },
+    "caseActions": "Case actions",
+    "discharge": "Discharge",
+    "reopen": "Reopen",
+    "reactivate": "Reactivate",
+    "putOnHold": "Put on hold",
+    "cancelCase": "Cancel case",
+    "dischargeConfirm": "Discharge \"{{title}}\"?",
+    "dischargeNote": "Marks the case as completed and records today as the discharge date. You can reopen it later if the patient returns.",
+    "dischargedOn": "Discharged {{date}}",
+    "statusUpdated": "Case updated",
+    "activeCases": "Active cases",
+    "completedCases": "Completed cases"
   },
   "encounters": {
     "sessions": "Sessions",

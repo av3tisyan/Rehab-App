@@ -38,7 +38,19 @@
     "diagnosis": "Ախտորոշում",
     "complaint": "Հիմնական բողոք",
     "create": "Ստեղծել դեպք",
-    "status": { "active": "Ակտիվ", "discharged": "Դուրս գրված", "on_hold": "Սպասման մեջ", "cancelled": "Չեղարկված" }
+    "status": { "active": "Ակտիվ", "discharged": "Դուրս գրված", "on_hold": "Սպասման մեջ", "cancelled": "Չեղարկված" },
+    "caseActions": "Դեպքի գործողություններ",
+    "discharge": "Դուրս գրել",
+    "reopen": "Վերաբացել",
+    "reactivate": "Վերաակտիվացնել",
+    "putOnHold": "Դնել սպասման մեջ",
+    "cancelCase": "Չեղարկել դեպքը",
+    "dischargeConfirm": "Դուրս գրե՞լ «{{title}}» դեպքը։",
+    "dischargeNote": "Դեպքը նշվում է որպես ավարտված, և գրանցվում է այսօրվա ամսաթիվը որպես դուրսգրման օր։ Կարող ես հետո վերաբացել, եթե հիվանդը նորից գա։",
+    "dischargedOn": "Դուրս գրված է {{date}}",
+    "statusUpdated": "Դեպքը թարմացվեց",
+    "activeCases": "Ակտիվ դեպքեր",
+    "completedCases": "Ավարտված դեպքեր"
   },
   "encounters": {
     "sessions": "Այցեր",

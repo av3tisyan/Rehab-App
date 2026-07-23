@@ -31,6 +31,7 @@ import { useDeletePatient, useEpisodes, usePatient } from '../../lib/queries';
 import { EpisodeFormModal } from '../episodes/EpisodeFormModal';
 import { PatientFormModal } from './PatientFormModal';
 import type { EpisodeStatus } from '@rehab/shared';
+import type { Episode } from '../../lib/types';
 
 const STATUS_COLOR: Record<EpisodeStatus, string> = {
   active: 'teal',
@@ -130,46 +131,75 @@ export function PatientDetailPage() {
         </Button>
       </Group>
 
-      {!episodes || episodes.length === 0 ? (
-        <Card withBorder radius="md" p="xl">
-          <Text c="dimmed" ta="center">
-            {t('episodes.empty')}
-          </Text>
-        </Card>
-      ) : (
-        <Stack gap="sm">
-          {episodes.map((ep) => (
-            <Card
-              key={ep.id}
-              withBorder
-              radius="md"
-              padding="lg"
-              className="hoverCard"
-              onClick={() => navigate(`/episodes/${ep.id}`)}
-              style={{ cursor: 'pointer' }}
-            >
-              <Group justify="space-between" wrap="nowrap">
-                <Group wrap="nowrap">
-                  <IconActivity size={22} color="var(--mantine-color-teal-6)" />
-                  <div>
-                    <Text fw={600} fz="lg">
-                      {ep.title}
+      {(() => {
+        const renderCase = (ep: Episode) => (
+          <Card
+            key={ep.id}
+            withBorder
+            radius="md"
+            padding="lg"
+            className="hoverCard"
+            onClick={() => navigate(`/episodes/${ep.id}`)}
+            style={{ cursor: 'pointer' }}
+          >
+            <Group justify="space-between" wrap="nowrap">
+              <Group wrap="nowrap">
+                <IconActivity size={22} color="var(--mantine-color-teal-6)" />
+                <div>
+                  <Text fw={600} fz="lg">
+                    {ep.title}
+                  </Text>
+                  {ep.diagnosis && (
+                    <Text c="dimmed" fz="sm">
+                      {ep.diagnosis}
                     </Text>
-                    {ep.diagnosis && (
-                      <Text c="dimmed" fz="sm">
-                        {ep.diagnosis}
-                      </Text>
-                    )}
-                  </div>
-                </Group>
-                <Badge color={STATUS_COLOR[ep.status]} variant="light">
-                  {t(`episodes.status.${ep.status}`)}
-                </Badge>
+                  )}
+                </div>
               </Group>
+              <Badge color={STATUS_COLOR[ep.status]} variant="light">
+                {t(`episodes.status.${ep.status}`)}
+              </Badge>
+            </Group>
+          </Card>
+        );
+
+        const list = episodes ?? [];
+        const active = list.filter((e) => e.status === 'active' || e.status === 'on_hold');
+        const completed = list.filter(
+          (e) => e.status === 'discharged' || e.status === 'cancelled',
+        );
+
+        if (list.length === 0) {
+          return (
+            <Card withBorder radius="md" p="xl">
+              <Text c="dimmed" ta="center">
+                {t('episodes.empty')}
+              </Text>
             </Card>
-          ))}
-        </Stack>
-      )}
+          );
+        }
+
+        return (
+          <Stack gap="lg">
+            {active.length > 0 && (
+              <div>
+                <Text fz="sm" fw={600} c="dimmed" tt="uppercase" mb="xs">
+                  {t('episodes.activeCases')}
+                </Text>
+                <Stack gap="sm">{active.map(renderCase)}</Stack>
+              </div>
+            )}
+            {completed.length > 0 && (
+              <div>
+                <Text fz="sm" fw={600} c="dimmed" tt="uppercase" mb="xs">
+                  {t('episodes.completedCases')}
+                </Text>
+                <Stack gap="sm">{completed.map(renderCase)}</Stack>
+              </div>
+            )}
+          </Stack>
+        );
+      })()}
 
       <EpisodeFormModal
         patientId={patient.id}

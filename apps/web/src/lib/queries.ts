@@ -99,6 +99,18 @@ export function useCreateEpisode() {
   });
 }
 
+export function useUpdateEpisode() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, body }: { id: string; body: Record<string, unknown> }) =>
+      apiFetch<Episode>(`/episodes/${id}`, { method: 'PATCH', body }),
+    onSuccess: (ep) => {
+      void qc.invalidateQueries({ queryKey: ['episodes', ep.patientId] });
+      void qc.invalidateQueries({ queryKey: ['episode', ep.id] });
+    },
+  });
+}
+
 // ---- Encounters ----
 export function useEncounters(episodeId: string | undefined) {
   return useQuery({

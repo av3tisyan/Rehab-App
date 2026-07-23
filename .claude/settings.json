@@ -62,7 +62,11 @@
       "Bash(git push *)",
       "Bash(git remote *)",
       "Bash(pnpm --filter @rehab/web add @fontsource/noto-sans-armenian)",
-      "Bash(powershell.exe -Command 'Get-NetTCPConnection -LocalPort 4173 -State Listen -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue }')"
+      "Bash(powershell.exe -Command 'Get-NetTCPConnection -LocalPort 4173 -State Listen -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue }')",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('apps/web/src/i18n/hy.json','utf8'\\)\\); JSON.parse\\(require\\('fs'\\).readFileSync\\('apps/web/src/i18n/en.json','utf8'\\)\\); console.log\\('JSON valid'\\)\")",
+      "Bash(pnpm build *)",
+      "Bash(curl -s -o /dev/null -w \"api: %{http_code}\\\\n\" http://localhost:3001/api/health)",
+      "Bash(powershell.exe -Command 'foreach \\($p in 5173,3001\\) { Get-NetTCPConnection -LocalPort $p -State Listen -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue } }')"
     ],
     "additionalDirectories": [
       "\\tmp"
