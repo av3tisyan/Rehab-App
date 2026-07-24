@@ -67,7 +67,14 @@
       "Bash(pnpm build *)",
       "Bash(curl -s -o /dev/null -w \"api: %{http_code}\\\\n\" http://localhost:3001/api/health)",
       "Bash(powershell.exe -Command 'foreach \\($p in 5173,3001\\) { Get-NetTCPConnection -LocalPort $p -State Listen -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue } }')",
-      "Bash(pnpm exec *)"
+      "Bash(pnpm exec *)",
+      "Bash(git rm *)",
+      "Bash(git commit -q -m 'chore: untrack local translations folder \\(was committed by mistake\\) *)",
+      "Read(//tmp/**)",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('apps/web/src/i18n/hy.json','utf8'\\)\\); console.log\\('hy.json valid'\\)\")",
+      "WebFetch(domain:www.linkedin.com)",
+      "WebFetch(domain:medium.com)",
+      "Bash(awk '{print $NF}')"
     ],
     "additionalDirectories": [
       "\\tmp"

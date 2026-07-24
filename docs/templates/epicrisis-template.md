@@ -14,7 +14,7 @@
 | | |
 |---|---|
 | Կլինիկա (Clinic) | |
-| Հիվանդ (Patient) | |
+| Պացիենտ (Patient) | |
 | Տարիք / սեռ (Age / sex) | |
 | Բուժման դեպք (Case) | |
 | Բուժման ժամանակահատված (Treatment period) | _սկիզբ → դուրսգրում (start → discharge)_ |
@@ -34,7 +34,7 @@
 ## 4. Անցկացված բուժում (Interventions provided)
 
 - _Կիրառված մեթոդներ՝ կինեզիոթերապիա, մանուալ թերապիա, ֆիզիոթերապիա, վարժություններ,
-  հիվանդի կրթություն (modalities used: therapeutic exercise, manual therapy,
+  պացիենտի կրթություն (modalities used: therapeutic exercise, manual therapy,
   physiotherapy, patient education)_
 
 ## 5. Օբյեկտիվ ցուցանիշներ — ելակետ → վերջին (Objective findings — baseline → final)
@@ -85,7 +85,7 @@
 
 ## Լրացված օրինակ (Filled example)
 
-**Հիվանդ:** Պետրոսյան Աննա, 45 տ., իգ.
+**Պացիենտ:** Պետրոսյան Աննա, 45 տ., իգ.
 **Դեպք:** Աջ ուսի ռեաբիլիտացիա — Adhesive capsulitis (ICD-10: M75.0)
 **Ժամանակահատված:** 2 այց (13.06.2026 → 13.07.2026)
 
