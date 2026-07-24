@@ -1,4 +1,4 @@
-import { AppShell, Badge, Burger, Group, Menu, Text, UnstyledButton } from '@mantine/core';
+import { AppShell, Badge, Burger, Button, Group, Menu, Text, UnstyledButton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {
   IconLanguage,
@@ -7,7 +7,7 @@ import {
   IconStethoscope,
   IconWifiOff,
 } from '@tabler/icons-react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../lib/auth-store';
 import { useOnlineStatus } from '../hooks/useOnlineStatus';
@@ -17,6 +17,7 @@ import classes from './AppLayout.module.css';
 export function AppLayout() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const clear = useAuthStore((s) => s.clear);
   const user = useAuthStore((s) => s.user);
   const online = useOnlineStatus();
@@ -31,12 +32,32 @@ export function AppLayout() {
     <AppShell header={{ height: 64 }} padding={0}>
       <AppShell.Header className={classes.header}>
         <Group h="100%" px="lg" justify="space-between" wrap="nowrap">
-          <UnstyledButton className={classes.brand} onClick={() => navigate('/patients')}>
-            <IconStethoscope size={26} stroke={1.7} />
-            <Text fw={700} fz="lg">
-              {t('app.name')}
-            </Text>
-          </UnstyledButton>
+          <Group gap="lg" wrap="nowrap">
+            <UnstyledButton className={classes.brand} onClick={() => navigate('/dashboard')}>
+              <IconStethoscope size={26} stroke={1.7} />
+              <Text fw={700} fz="lg" visibleFrom="sm">
+                {t('app.name')}
+              </Text>
+            </UnstyledButton>
+            <Group gap={4} wrap="nowrap" visibleFrom="xs">
+              <Button
+                variant={pathname.startsWith('/dashboard') ? 'light' : 'subtle'}
+                color="gray"
+                size="sm"
+                onClick={() => navigate('/dashboard')}
+              >
+                {t('nav.dashboard')}
+              </Button>
+              <Button
+                variant={pathname.startsWith('/patients') ? 'light' : 'subtle'}
+                color="gray"
+                size="sm"
+                onClick={() => navigate('/patients')}
+              >
+                {t('nav.patients')}
+              </Button>
+            </Group>
+          </Group>
 
           <Group gap="sm" wrap="nowrap">
             {!online && (

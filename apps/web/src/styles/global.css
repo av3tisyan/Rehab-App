@@ -25,3 +25,14 @@ body {
 .hoverCard:active {
   transform: translateY(0);
 }
+
+/* Subtle hover for list rows (dashboard). */
+.hoverRow {
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: var(--radius-md);
+  transition: background var(--dur-base) ease;
+}
+.hoverRow:hover {
+  background: var(--surface-hover);
+}

@@ -4,6 +4,7 @@ import { RequireAuth } from './RequireAuth';
 import { AppLayout } from './AppLayout';
 import { useAuthStore } from '../lib/auth-store';
 import { LoginPage } from '../features/auth/LoginPage';
+import { DashboardPage } from '../features/dashboard/DashboardPage';
 import { PatientsPage } from '../features/patients/PatientsPage';
 import { PatientDetailPage } from '../features/patients/PatientDetailPage';
 import { EpisodeDetailPage } from '../features/episodes/EpisodeDetailPage';
@@ -27,7 +28,8 @@ export function App() {
           </RequireAuth>
         }
       >
-        <Route path="/" element={<Navigate to="/patients" replace />} />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/patients" element={<PatientsPage />} />
         <Route path="/patients/:patientId" element={<PatientDetailPage />} />
         <Route path="/episodes/:episodeId" element={<EpisodeDetailPage />} />
@@ -44,7 +46,7 @@ export function App() {
           }
         />
       </Route>
-      <Route path="*" element={<Navigate to="/patients" replace />} />
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );
 }

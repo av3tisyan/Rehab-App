@@ -1,6 +1,19 @@
 {
   "app": { "name": "Վերականգնողական կլինիկա" },
-  "nav": { "patients": "Պացիենտներ", "logout": "Դուրս գալ", "language": "Լեզու" },
+  "nav": { "dashboard": "Վահանակ", "patients": "Պացիենտներ", "logout": "Դուրս գալ", "language": "Լեզու" },
+  "dashboard": {
+    "title": "Վահանակ",
+    "activePatients": "Պացիենտներ",
+    "activeCases": "Ակտիվ դեպքեր",
+    "onHoldCases": "Սպասման մեջ",
+    "dischargedCases": "Դուրս գրված",
+    "recentSessions": "Վերջին այցերը",
+    "recentDischarges": "Վերջին դուրսգրումները",
+    "noSessions": "Դեռ այցեր չկան։",
+    "noDischarges": "Դեռ դուրս գրված դեպքեր չկան։",
+    "session": "Այց",
+    "newPatient": "Նոր պացիենտ"
+  },
   "auth": {
     "login": "Մուտք",
     "email": "Էլ. փոստ",

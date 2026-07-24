@@ -7,6 +7,7 @@ import type {
   AuditRow,
   ChainStatus,
   ComparisonResponse,
+  DashboardOverview,
   DocumentRow,
   Encounter,
   Episode,
@@ -25,6 +26,14 @@ export function useLogin() {
     mutationFn: (creds: { email: string; password: string }) =>
       apiFetch<LoginResult>('/auth/login', { method: 'POST', body: creds, auth: false }),
     onSuccess: (data) => setSession(data),
+  });
+}
+
+// ---- Dashboard ----
+export function useDashboard() {
+  return useQuery({
+    queryKey: ['dashboard'],
+    queryFn: () => apiFetch<DashboardOverview>('/dashboard'),
   });
 }
 

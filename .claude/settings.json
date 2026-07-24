@@ -74,7 +74,9 @@
       "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('apps/web/src/i18n/hy.json','utf8'\\)\\); console.log\\('hy.json valid'\\)\")",
       "WebFetch(domain:www.linkedin.com)",
       "WebFetch(domain:medium.com)",
-      "Bash(awk '{print $NF}')"
+      "Bash(awk '{print $NF}')",
+      "Bash(curl -s -X POST http://localhost:3001/api/auth/login -H \"Content-Type: application/json\" -d '{\"email\":\"admin@rehab.local\",\"password\":\"ChangeMe123!\"}' -w \"\\\\nHTTP %{http_code}\\\\n\")",
+      "Bash(powershell.exe -Command \"\\(Get-NetTCPConnection -LocalPort 5432 -State Listen -ErrorAction SilentlyContinue | Measure-Object\\).Count\")"
     ],
     "additionalDirectories": [
       "\\tmp"

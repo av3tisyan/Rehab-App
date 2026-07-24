@@ -1,6 +1,19 @@
 {
   "app": { "name": "Rehab Clinic" },
-  "nav": { "patients": "Patients", "logout": "Log out", "language": "Language" },
+  "nav": { "dashboard": "Dashboard", "patients": "Patients", "logout": "Log out", "language": "Language" },
+  "dashboard": {
+    "title": "Dashboard",
+    "activePatients": "Patients",
+    "activeCases": "Active cases",
+    "onHoldCases": "On hold",
+    "dischargedCases": "Discharged",
+    "recentSessions": "Recent sessions",
+    "recentDischarges": "Recent discharges",
+    "noSessions": "No sessions yet.",
+    "noDischarges": "No discharged cases yet.",
+    "session": "Session",
+    "newPatient": "New patient"
+  },
   "auth": {
     "login": "Log in",
     "email": "Email",

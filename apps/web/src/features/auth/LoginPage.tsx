@@ -22,7 +22,7 @@ export function LoginPage() {
   const submit = form.onSubmit(async (values) => {
     try {
       await login.mutateAsync(values);
-      navigate('/patients', { replace: true });
+      navigate('/dashboard', { replace: true });
     } catch {
       /* error rendered below */
     }

@@ -12,6 +12,7 @@ import { EpisodesModule } from './episodes/episodes.module';
 import { EncountersModule } from './encounters/encounters.module';
 import { AssessmentsModule } from './assessments/assessments.module';
 import { CatalogModule } from './catalog/catalog.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 import { DocumentsModule } from './documents/documents.module';
 import { GoalsModule } from './goals/goals.module';
 import { HealthController } from './health/health.controller';
@@ -32,6 +33,7 @@ import { HealthController } from './health/health.controller';
     CatalogModule,
     GoalsModule,
     DocumentsModule,
+    DashboardModule,
   ],
   controllers: [HealthController],
   providers: [

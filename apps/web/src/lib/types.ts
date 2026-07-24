@@ -140,6 +140,29 @@ export interface ChainStatus {
   firstBadId: string | null;
 }
 
+export interface DashboardOverview {
+  activePatients: number;
+  activeCases: number;
+  onHoldCases: number;
+  dischargedCases: number;
+  recentSessions: {
+    encounterId: string;
+    episodeId: string;
+    episodeTitle: string;
+    patientId: string;
+    patientName: string;
+    sessionNumber: number | null;
+    encounterDate: string;
+  }[];
+  recentDischarges: {
+    episodeId: string;
+    title: string;
+    patientId: string;
+    patientName: string;
+    dischargedAt: string | null;
+  }[];
+}
+
 export interface DocumentRow {
   id: string;
   episodeId: string;
