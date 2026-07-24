@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   Button,
   Card,
@@ -6,6 +6,7 @@ import {
   Loader,
   Modal,
   NumberInput,
+  Progress,
   Select,
   Stack,
   Text,
@@ -17,10 +18,10 @@ import { IconPlus, IconTargetArrow } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
 import { useTranslation } from 'react-i18next';
 import type { GoalStatus } from '@rehab/shared';
-import { useCreateGoal, useGoals, useUpdateGoal } from '../../lib/queries';
+import { useCreateGoal, useGoals, useTrackedMetrics, useUpdateGoal } from '../../lib/queries';
+import type { TrackedMetric, TreatmentGoal } from '../../lib/types';
+import { measureKindLabel, regionLabel } from '../../i18n/clinical-terms';
 
-// Local list (type-only import from @rehab/shared — its CommonJS build doesn't
-// expose runtime named exports to the bundler; the type still enforces the set).
 const GOAL_STATUSES: GoalStatus[] = ['open', 'achieved', 'partially_achieved', 'not_achieved'];
 
 const STATUS_COLOR: Record<GoalStatus, string> = {
@@ -30,26 +31,81 @@ const STATUS_COLOR: Record<GoalStatus, string> = {
   not_achieved: 'red',
 };
 
+function metricKey(m: {
+  typeCode: string;
+  bodyRegion: string | null;
+  side: string;
+  measureKind: string | null;
+}): string {
+  return `${m.typeCode}|${m.bodyRegion ?? ''}|${m.side}|${m.measureKind ?? ''}`;
+}
+
+/** Progress from baseline toward target (works for both directions, e.g. pain down). */
+function progressPct(
+  baseline: number | null,
+  current: number | null,
+  target: number | null,
+): number | null {
+  if (baseline === null || current === null || target === null || target === baseline) return null;
+  const pct = ((current - baseline) / (target - baseline)) * 100;
+  return Math.max(0, Math.min(100, Math.round(pct)));
+}
+
 export function GoalsPanel({ episodeId }: { episodeId: string }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language;
   const { data: goals, isLoading } = useGoals(episodeId);
+  const { data: metrics } = useTrackedMetrics(episodeId);
   const createGoal = useCreateGoal();
   const updateGoal = useUpdateGoal();
   const [addOpen, setAddOpen] = useState(false);
 
+  const metricLabel = (m: TrackedMetric): string => {
+    const parts = [m.typeName];
+    if (m.measureKind) parts.push(measureKindLabel(m.measureKind, lang));
+    if (m.bodyRegion) parts.push(regionLabel(m.bodyRegion, lang));
+    if (m.side === 'left') parts.push(t('assessment.left'));
+    else if (m.side === 'right') parts.push(t('assessment.right'));
+    return parts.join(' · ');
+  };
+
+  const metricByKey = useMemo(
+    () => new Map((metrics ?? []).map((m) => [metricKey(m), m])),
+    [metrics],
+  );
+
+  const metricOptions = useMemo(
+    () => (metrics ?? []).map((m) => ({ value: metricKey(m), label: metricLabel(m) })),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [metrics, lang],
+  );
+
   const form = useForm({
-    initialValues: { description: '', targetValue: '' as number | '', targetDate: '' },
+    initialValues: {
+      description: '',
+      targetValue: '' as number | '',
+      targetDate: '',
+      metricKey: '' as string,
+    },
     validate: { description: (v) => (v.trim() ? null : t('goals.description')) },
   });
 
   const submit = form.onSubmit(async (values) => {
+    const body: Record<string, unknown> = {
+      episodeId,
+      description: values.description.trim(),
+    };
+    if (values.targetValue !== '') body.targetValue = values.targetValue;
+    if (values.targetDate) body.targetDate = values.targetDate;
+    if (values.metricKey) {
+      const [typeCode, region, side, measure] = values.metricKey.split('|');
+      body.metricTypeCode = typeCode;
+      if (region) body.metricBodyRegion = region;
+      if (side) body.metricSide = side;
+      if (measure) body.metricMeasureKind = measure;
+    }
     try {
-      await createGoal.mutateAsync({
-        episodeId,
-        description: values.description.trim(),
-        ...(values.targetValue !== '' && { targetValue: values.targetValue }),
-        ...(values.targetDate && { targetDate: values.targetDate }),
-      });
+      await createGoal.mutateAsync(body);
       notifications.show({ color: 'teal', message: t('goals.saved') });
       form.reset();
       setAddOpen(false);
@@ -68,6 +124,30 @@ export function GoalsPanel({ episodeId }: { episodeId: string }) {
   };
 
   const statusData = GOAL_STATUSES.map((s) => ({ value: s, label: t(`goals.status.${s}`) }));
+
+  const renderProgress = (g: TreatmentGoal) => {
+    if (!g.metricTypeCode) return null;
+    const key = `${g.metricTypeCode}|${g.metricBodyRegion ?? ''}|${g.metricSide ?? ''}|${g.metricMeasureKind ?? ''}`;
+    const m = metricByKey.get(key);
+    const unit = m?.unit ? ` ${m.unit}` : '';
+    const target = g.targetValue !== null ? Number(g.targetValue) : null;
+    const pct = progressPct(g.baselineValue, g.currentValue, target);
+    return (
+      <Stack gap={4} mt="xs">
+        <Group justify="space-between">
+          <Text fz="xs" c="dimmed">
+            {m ? metricLabel(m) : g.metricTypeCode}
+          </Text>
+          <Text fz="sm" fw={600}>
+            {t('goals.current')}: {g.currentValue ?? '—'}
+            {unit}
+            {target !== null ? ` → ${target}${unit}` : ''}
+          </Text>
+        </Group>
+        {pct !== null && <Progress value={pct} color="teal" size="md" radius="xl" />}
+      </Stack>
+    );
+  };
 
   return (
     <Stack gap="md">
@@ -100,7 +180,7 @@ export function GoalsPanel({ episodeId }: { episodeId: string }) {
               <Group justify="space-between" align="flex-start" wrap="nowrap" gap="lg">
                 <div style={{ flex: 1 }}>
                   <Text fw={600}>{g.description}</Text>
-                  {(g.targetValue || g.targetDate) && (
+                  {!g.metricTypeCode && (g.targetValue || g.targetDate) && (
                     <Text fz="sm" c="dimmed" mt={2}>
                       {t('goals.target')}
                       {g.targetValue ? `: ${g.targetValue}` : ''}
@@ -109,6 +189,7 @@ export function GoalsPanel({ episodeId }: { episodeId: string }) {
                         : ''}
                     </Text>
                   )}
+                  {renderProgress(g)}
                 </div>
                 <Select
                   w={200}
@@ -117,7 +198,12 @@ export function GoalsPanel({ episodeId }: { episodeId: string }) {
                   onChange={(v) => v && setStatus(g.id, v as GoalStatus)}
                   allowDeselect={false}
                   aria-label={t('goals.status.open')}
-                  styles={{ input: { color: `var(--mantine-color-${STATUS_COLOR[g.status]}-7)`, fontWeight: 600 } }}
+                  styles={{
+                    input: {
+                      color: `var(--mantine-color-${STATUS_COLOR[g.status]}-7)`,
+                      fontWeight: 600,
+                    },
+                  }}
                 />
               </Group>
             </Card>
@@ -137,6 +223,16 @@ export function GoalsPanel({ episodeId }: { episodeId: string }) {
               minRows={2}
               {...form.getInputProps('description')}
             />
+            {metricOptions.length > 0 && (
+              <Select
+                size="md"
+                label={t('goals.linkedMetric')}
+                placeholder={t('goals.noMetric')}
+                clearable
+                data={metricOptions}
+                {...form.getInputProps('metricKey')}
+              />
+            )}
             <Group grow>
               <NumberInput
                 size="md"

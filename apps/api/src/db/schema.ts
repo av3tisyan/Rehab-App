@@ -235,6 +235,11 @@ export const treatmentGoals = pgTable('treatment_goals', {
   targetValue: numeric('target_value'),
   targetDate: date('target_date'),
   status: goalStatusEnum('status').notNull().default('open'),
+  // Optional link to a measured metric (drives auto-progress).
+  metricTypeCode: text('metric_type_code'),
+  metricBodyRegion: text('metric_body_region'),
+  metricSide: bodySideEnum('metric_side'),
+  metricMeasureKind: text('metric_measure_kind'),
   createdAt,
   updatedAt,
 });

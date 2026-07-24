@@ -1,6 +1,15 @@
-import { IsIn, IsISO8601, IsNumber, IsOptional, IsString, IsUUID, MinLength } from 'class-validator';
+import {
+  IsIn,
+  IsISO8601,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUUID,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 import { PartialType } from '@nestjs/swagger';
-import { GOAL_STATUSES, type GoalStatus } from '@rehab/shared';
+import { BODY_SIDES, GOAL_STATUSES, type BodySide, type GoalStatus } from '@rehab/shared';
 
 export class CreateGoalDto {
   @IsUUID()
@@ -21,6 +30,26 @@ export class CreateGoalDto {
   @IsOptional()
   @IsIn(GOAL_STATUSES)
   status?: GoalStatus;
+
+  // Optional link to a measured metric (auto-progress).
+  @IsOptional()
+  @IsString()
+  @MaxLength(32)
+  metricTypeCode?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(64)
+  metricBodyRegion?: string;
+
+  @IsOptional()
+  @IsIn(BODY_SIDES)
+  metricSide?: BodySide;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(64)
+  metricMeasureKind?: string;
 }
 
 export class UpdateGoalDto extends PartialType(CreateGoalDto) {}

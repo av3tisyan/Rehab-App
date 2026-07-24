@@ -16,6 +16,7 @@ import type {
   Patient,
   RomNorm,
   ScalePoint,
+  TrackedMetric,
   TreatmentGoal,
 } from './types';
 
@@ -126,6 +127,14 @@ export function useGoals(episodeId: string | undefined) {
   return useQuery({
     queryKey: ['goals', episodeId],
     queryFn: () => apiFetch<TreatmentGoal[]>(`/goals?episodeId=${episodeId}`),
+    enabled: !!episodeId,
+  });
+}
+
+export function useTrackedMetrics(episodeId: string | undefined) {
+  return useQuery({
+    queryKey: ['goal-metrics', episodeId],
+    queryFn: () => apiFetch<TrackedMetric[]>(`/goals/metrics?episodeId=${episodeId}`),
     enabled: !!episodeId,
   });
 }

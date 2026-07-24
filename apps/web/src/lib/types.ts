@@ -181,6 +181,23 @@ export interface TreatmentGoal {
   targetValue: string | null;
   targetDate: string | null;
   status: 'open' | 'achieved' | 'partially_achieved' | 'not_achieved';
+  metricTypeCode: string | null;
+  metricBodyRegion: string | null;
+  metricSide: BodySide | null;
+  metricMeasureKind: string | null;
+  // Enriched by the API for metric-linked goals:
+  currentValue: number | null;
+  baselineValue: number | null;
+}
+
+export interface TrackedMetric {
+  typeCode: string;
+  typeName: string;
+  unit: string | null;
+  bodyRegion: string | null;
+  side: string;
+  measureKind: string | null;
+  latestValue: number | null;
 }
 
 export interface EpicrisisContent {

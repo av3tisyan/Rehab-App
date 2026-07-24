@@ -16,6 +16,11 @@ export class GoalsController {
     return this.goals.listByEpisode(user, episodeId);
   }
 
+  @Get('metrics')
+  metrics(@CurrentUser() user: AuthUser, @Query('episodeId', ParseUUIDPipe) episodeId: string) {
+    return this.goals.getTrackedMetrics(user, episodeId);
+  }
+
   @Post()
   create(@CurrentUser() user: AuthUser, @Body() dto: CreateGoalDto) {
     return this.goals.create(user, dto);
